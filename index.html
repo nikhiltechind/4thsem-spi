@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width, height=device-height, user-scalable=no" >
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <title>SPI Calculator</title>
+    </head><style>
+:root, body {
+    width:100%; height:100%;
+    padding: 0; margin: 0;
+    box-sizing: border-box;
+    user-select: none;
+    top-highlight-color: transparent;
+    text-align: center;
+    background-color: #151827f2;
+    color: white;
+    text-shadow: 0 0 10px black;
+    font: bold 19px sans-serif;
+}
+*, ::before, ::after {
+    box-sizing: inherit;
+}
+.formula, .result {
+    color: gold;
+    font-size: 22px;
+}
+input {
+    outline: none;
+text-align:center;
+    border: 2px solid black;
+    color:black;
+    height: 25px;
+}
+.calc {
+    width: auto;
+    height: 40px;
+    outline: none;
+    border: 2px ;
+    background-color: crimson;
+    box-shadow: 0 0 50px crimson;
+    transition: .5s;
+    color: inherit;
+    font: inherit;
+    border-radius: 5px;
+}
+.calc:hover {
+     color: #111;
+     background: #39ff14;
+   box-shadow: 0 0 60px #4fff14;
+        
+}
+div.container{
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  background-color:rgb(4, 19, 29);
+  padding: 30px;
+  margin: 10px;
+}
+div.containerSp{
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  background-color:rgb(4, 19, 29);
+  padding: 30px;
+  margin: 10px;
+ 
+}
+div.container2{
+  position: relative;
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  background-color:rgb(4, 19, 29);
+  padding: 30px;
+  margin: 10px;
+  padding: 10px;
+  
+  flex-wrap: wrap;
+}
+
+
+div.child{
+  position: relative;
+ margin: 10px;;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-radius: 5px ;
+ /* box-shadow: 0 0 60px #14e4ff;*/
+  box-shadow: inset 0 0 5px 3px white,inset 0 0 3px 2px rgb(14, 178, 224);
+ 
+  /* Created with https://www.css-gradient.com */
+background: #010C73;
+background: -webkit-linear-gradient(bottom left, #010C73, #870453);
+background: -moz-linear-gradient(bottom left, #010C73, #870453);
+background: linear-gradient(to top right, #010C73, #870453);
+letter-spacing: 1px;
+}
+
+
+#cn *
+{
+  
+ border-radius: 15px;
+ background-color: rgb(59, 5, 117);
+ color:aliceblue;
+}
+div.sp{
+  position: relative;
+ margin: 10px;;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height:50px;
+  border-radius: 5px ;
+ /* box-shadow: 0 0 60px #14e4ff;*/
+ color: white;
+  transform:skewX(-20deg);
+  overflow: hidden;
+}
+
+.sp9, .sp9p5{
+  background:linear-gradient(10deg,transparent,lime);
+  box-shadow: 0 0 10px lime;
+}
+.sp8p5 ,.sp8{
+  background:linear-gradient(10deg,transparent,rgb(0, 255, 204));
+  box-shadow: 0 0 10px rgb(0, 255, 204);
+}
+.sp7p5 ,.sp7{
+  background:linear-gradient(10deg,transparent,orange);
+  box-shadow: 0 0 10px orange;
+}
+.sp6p5 ,.sp6{
+  background:linear-gradient(10deg,transparent,red);
+  box-shadow: 0 0 10px red;
+}
+
+
+
+</style>
+<script>
+function init() {
+   var btn = document.querySelector(".calc");
+   var result = document.querySelector(".result");
+   var res = document.querySelector(".res");
+   
+  
+   btn.addEventListener("click", function() {
+     var cn = eval( document.getElementById("cn").value);
+     var cg = eval( document.getElementById("cg").value);
+     var dm = eval( document.getElementById("dm").value);
+     var soft = eval( document.getElementById("soft").value);
+     var ele = eval( document.getElementById("ele").value);
+     var cnlab = eval( document.getElementById("cnlab").value);
+     var cglab = eval( document.getElementById("cglab").value);
+     var proj = eval( document.getElementById("proj").value);
+    
+     var sem1 = eval( document.getElementById("spi1").value);
+     var sem2 = eval( document.getElementById("spi2").value);
+     var sem3 = eval( document.getElementById("spi3").value);
+     
+    
+  
+    
+    if(cn>0 && cg>0 && dm>0 && soft>0 && ele>0 && cnlab>0 && cglab>0 && proj>0 ) {
+        var spi4=(((cn*4)+(cg*4)+(dm*3)+(soft*3)+(ele*3)+(cnlab*2)+(cglab*2)+(proj*2))/23).toFixed(2);
+        result.innerText = spi4;
+        res.innerText=(((20*sem1)+(21*sem2)+(23*(spi4))+(25*sem3))/(20+21+25+23)).toFixed(2);
+      
+        
+    }
+    else {
+        result.innerText = "Wrong Input!"
+    }
+
+    document.getElementById("myPlot").style.display="";
+    document.getElementById("myPlot2").style.display="";
+    document.getElementById("R1").style.display="";
+    document.getElementById("R2").style.display="";
+    document.getElementById("desc").style.display="";
+    
+   
+    
+    var xArray = [1,2,3,4];
+var yArray = [sem1,sem2,sem3,spi4];
+
+var cpi2=(((20*sem1)+(21*sem2))/41).toFixed(2);
+var cpi4=(((20*sem1)+(21*sem2)+(25*sem3)+(23*(spi4)))/89).toFixed(2);
+var cpi3=(((20*sem1)+(21*sem2)+(25*sem3))/66).toFixed(2);
+var ycArray = [sem1,cpi2,cpi3,cpi4];
+var sigma=(((20*sem1)+(21*sem2)+(25*sem3))).toFixed(2);
+var cpAr=[6,6.5,7,7.5,8,8.5,9,9.5];
+
+
+  var sp6 = document.querySelector("#sp6");
+var ExpC=(((89*cpAr[0])-sigma)/23).toFixed(3);
+sp6.innerText=ExpC>=5.5 && ExpC<=10?"Atleast "+ExpC+" spi for cpi >= 6":ExpC<5.5?"below 5.5 spi for cpi >= 6":"CPI 6 Not Possible";
+ 
+  var sp6p5 = document.querySelector("#sp6p5");
+var ExpC=(((89*cpAr[1])-sigma)/23).toFixed(3);
+sp6p5.innerText=ExpC>=5.5 && ExpC<=10?"Atleast "+ExpC+" for cpi >= 6.5":ExpC<5.5?"below 5.5 spi for cpi >= 6.5":"CPI 6.5 Not Possible";
+ 
+  var sp7 = document.querySelector("#sp7");
+var ExpC=(((89*cpAr[2])-sigma)/23).toFixed(3);
+sp7.innerText=ExpC>=5.5 && ExpC<=10?"Atleast "+ExpC+" spi for cpi >= 7":ExpC<5.5?"below 5.5 spi for cpi >= 7":"CPI 7 Not Possible";
+  
+  var sp7p5 = document.querySelector("#sp7p5");
+var ExpC=(((89*cpAr[3])-sigma)/23).toFixed(3);
+sp7p5.innerText=ExpC>=5.5 && ExpC<=10?"Atleast "+ExpC+" spi for cpi >= 7.5":ExpC<5.5?"below 5.5 spi for cpi >= 7.5":"CPI 7.5 Not Possible";
+ 
+  var sp8 = document.querySelector("#sp8");
+var ExpC=(((89*cpAr[4])-sigma)/23).toFixed(3);
+sp8.innerText=ExpC>=5.5 && ExpC<=10?"Atleast "+ExpC+" spi for cpi >= 8":ExpC<5.5?"below 5.5 spi for cpi >= 8":"CPI 8 Not Possible";
+  
+  var sp8p5 = document.querySelector("#sp8p5");
+var ExpC=(((89*cpAr[5])-sigma)/23).toFixed(3);
+sp8p5.innerText=ExpC>=5.5 && ExpC<=10?"Atleast "+ExpC+" spi for cpi >= 8.5":ExpC<5.5?"below 5.5 spi for cpi >= 8.5":"CPI 8.5 Not Possible";
+  
+  var sp9 = document.querySelector("#sp9");
+var ExpC=(((89*cpAr[6])-sigma)/23).toFixed(3);
+sp9.innerText=ExpC>=5.5 && ExpC<=10?"Atleast "+ExpC+" spi for cpi >= 9":ExpC<5.5?"below 5.5 spi for cpi >= 9":"CPI 9 Not Possible";
+  
+  var sp9p5 = document.querySelector("#sp9p5");
+var ExpC=(((89*cpAr[7])-sigma)/23).toFixed(3);
+sp9p5.innerText=ExpC>=5.5 && ExpC<=10?"Atleast "+ExpC+" spi for cpi >= 9.5":ExpC<5.5?"below 5.5 spi for cpi >= 9.5":"CPI 9.5 Not Possible";
+ 
+
+// Define Data
+var data = [{
+  x: xArray,
+  y: yArray,
+  mode: 'lines',
+ 
+    line: {
+      color: 'red'
+    },
+  
+}];
+var data1 = [{
+  x: xArray,
+  y: ycArray,
+  mode: 'lines',
+ 
+    
+    line: {
+      color: 'blue'
+    },
+  
+}];
+
+// Define Layout
+var layout = {
+  xaxis: {range: [0, 4], title: "SEMESTER"},
+  yaxis: { title: "SPI"},  
+  title: "SPI GRAPH"
+};
+var layout2 = {
+ 
+  xaxis: {range: [0, 4], title: "SEMESTER"},
+  yaxis: { title: "CPI"},  
+  title: "CPI GRAPH"
+};
+
+// Display using Plotly
+Plotly.newPlot("myPlot", data, layout,{displayModeBar: false});
+Plotly.newPlot("myPlot2", data1, layout2,{displayModeBar: false});
+
+document.getElementById("ss").style.display="";
+    document.getElementById("ssh").style.display="";
+    
+
+  }, false);
+
+  }
+</script>
+    <body onload="init()">
+       <U><h1>SPI  CALCULATOR FOR 4TH SEM</h1></U>
+        <br /> <br />
+        
+        <div class="container">
+          <div class="child">
+        <label for="computernetwork">COMP NETWORK &nbsp; </label> 
+      
+        <select id="cn">
+            <option value="10">A+</option>
+            <option value="9">A</option>
+            <option value="8">B+</option>
+            <option value="7">B</option>
+            <option value="6">C</option>
+            <option value="4">D</option>
+            
+          </select>
+        <br /> <br /> <br />
+        </div>
+        <div class="child">
+        <label for="cg">COMP GRAPHICS &nbsp; </label> 
+       
+        <select id="cg">
+            <option value="10">A+</option>
+            <option value="9">A</option>
+            <option value="8">B+</option>
+            <option value="7">B</option>
+            <option value="6">C</option>
+            <option value="4">D</option>
+            
+          </select>
+        <br /> <br /> <br />
+      </div>
+        <div class="child">
+        <label for="datamining">DATA MINING &nbsp; </label> 
+       
+        <select id="dm">
+            <option value="10">A+</option>
+            <option value="9">A</option>
+            <option value="8">B+</option>
+            <option value="7">B</option>
+            <option value="6">C</option>
+            <option value="4">D</option>
+            
+          </select>
+        <br /> <br /> <br />
+
+      </div>
+
+
+        <div class="child">
+        <label for="SOFT ENGG">SOFT ENGG &nbsp;  </label> 
+        <select id="soft">
+            <option value="10">A+</option>
+            <option value="9">A</option>
+            <option value="8">B+</option>
+            <option value="7">B</option>
+            <option value="6">C</option>
+            <option value="4">D</option>
+            
+          </select>
+        <br /> <br /> <br />
+      </div>
+        <div class="child">
+        <label for="ele">ELECTIVE - I &nbsp; </label> 
+        <select id="ele">
+            <option value="10">A+</option>
+            <option value="9">A</option>
+            <option value="8">B+</option>
+            <option value="7">B</option>
+            <option value="6">C</option>
+            <option value="4">D</option>
+            
+          </select>
+        <br /> <br /> <br />
+      </div>
+        <div class="child">
+        <label for="CN LAB">CN LAB &nbsp; </label> 
+       
+        <select id="cnlab">
+            <option value="10">A+</option>
+            <option value="9">A</option>
+            <option value="8">B+</option>
+            <option value="7">B</option>
+            <option value="6">C</option>
+            <option value="4">D</option>
+            
+          </select>
+        <br /> <br /> <br />
+      </div>
+        <div class="child">
+        <label for="MINI PROJECT">MINI PROJECT &nbsp; </label> 
+       
+        <select id="proj">
+            <option value="10">A+</option>
+            <option value="9">A</option>
+            <option value="8">B+</option>
+            <option value="7">B</option>
+            <option value="6">C</option>
+            <option value="4">D</option>
+            
+          </select>
+        <br /> <br /> <br />
+      </div>
+        <div class="child">
+        <label for="cg LAB">CG LAB &nbsp; </label> 
+       
+        <select id="cglab">
+            <option value="10">A+</option>
+            <option value="9">A</option>
+            <option value="8">B+</option>
+            <option value="7">B</option>
+            <option value="6">C</option>
+            <option value="4">D</option>
+            
+          </select>
+        <br /> <br /> <br />
+      </div>
+       
+        </div>
+        <div id="container">
+          <div>
+        <label for="sem1">SEM 1 SPI &nbsp; </label> 
+       <input type="number" id="spi1">
+       </div>
+        <div>
+       <label for="sem2">SEM 2 SPI &nbsp; </label> 
+       <input type="number" id="spi2">
+       </div>
+        <div>
+       <label for="sem3">SEM 3 SPI &nbsp; </label> 
+       <input type="number" id="spi3">
+       </div>
+       </div>
+       <br><br><br>
+        <button class="calc">Calculate</button>
+        <br /> <br />
+       <p id="R1" style="display: none;"> SPI: &nbsp;</p> <p class="result" > </p>
+        
+        <p id="R2" style="display: none;">CPI: &nbsp;</p><p class="res"> </p>
+       <div class="container2">
+       <div id="myPlot" style="height:300px;max-width:350px; background-color: #06164b;display: none;"></div>
+       <br>
+       <div id="myPlot2" style="height:300px;max-width:350px; background-color: #06164b;display: none;"></div>
+        </div>
+        <br>
+        <U><h1 id="ssh" style="display: none;">Expected SPI V/S CPI 4TH SEM</h1></U>
+        <p id="desc" style="display:none"> based on your previous 3 semesters spi</p>
+        
+        <br /> <br />
+        <div class="containerSp" id="ss" style="display: none;">
+          
+          <div class="sp sp6" id="sp6">Expected </div>
+          <div class="sp sp6p5"  id="sp6p5">7878</div>
+          <div class="sp sp7"  id="sp7"></div>
+          <div class="sp sp7p5" id="sp7p5" ></div>
+          <div class="sp sp8" id="sp8" ></div>
+          <div class="sp sp8p5"  id="sp8p5"></div>
+          <div class="sp sp9" id="sp9" ></div>
+          <div class="sp sp9p5"  id="sp9p5"></div>
+        </div>
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdGl_z-eLHlIThTaCadvu4i2zUfsPh5iP8RvGPzuZ0B2yFInQ/viewform?embedded=true" width="100%" height="400" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    </body>
+</html>
