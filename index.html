@@ -195,15 +195,14 @@ function init() {
     }
 
     document.getElementById("myPlot").style.display="";
-    document.getElementById("myPlot2").style.display="";
+   
     document.getElementById("R1").style.display="";
     document.getElementById("R2").style.display="";
     document.getElementById("desc").style.display="";
     
    
     
-    var xArray = [1,2,3,4];
-var yArray = [sem1,sem2,sem3,spi4];
+   
 
 var cpi2=(((20*sem1)+(21*sem2))/41).toFixed(2);
 var cpi4=(((20*sem1)+(21*sem2)+(25*sem3)+(23*(spi4)))/89).toFixed(2);
@@ -247,44 +246,42 @@ sp9p5.innerText=ExpC>=5.5 && ExpC<=10?"Atleast "+ExpC+" spi for cpi >= 9.5":ExpC
  
 
 // Define Data
-var data = [{
-  x: xArray,
-  y: yArray,
-  mode: 'lines',
- 
-    line: {
-      color: 'red'
-    },
-  
-}];
-var data1 = [{
-  x: xArray,
-  y: ycArray,
-  mode: 'lines',
- 
-    
-    line: {
-      color: 'blue'
-    },
-  
-}];
+var spiplot = {
+  x: [1, 2, 3, 4],
+  y: [sem1, sem2,sem3, spi4],
+  mode: 'lines+markers',
+  name: 'SPI',
+  marker: {
+    color: 'rgb(55, 128, 191)',
+    size: 8
+  },
+  line: {
+    color: 'rgb(55, 128, 191)',
+    width: 1
+  }
+};
+var cpiplot = {
+  x: [1, 2, 3, 4],
+  y: [sem1, cpi2, cpi3, cpi4],
+  mode: 'lines+markers',
+  name: 'CPI',
+  marker: {
+    color: 'rgb(219, 64, 82)',
+    size: 8
+  },
+  line: {
+    color: 'rgb(219, 64, 82)',
+    width: 1
+  }
+};
 
-// Define Layout
+var data = [spiplot, cpiplot];
+
 var layout = {
-  xaxis: {range: [0, 4], title: "SEMESTER"},
-  yaxis: { title: "SPI"},  
-  title: "SPI GRAPH"
-};
-var layout2 = {
- 
-  xaxis: {range: [0, 4], title: "SEMESTER"},
-  yaxis: { title: "CPI"},  
-  title: "CPI GRAPH"
+  title: 'SPI - CPI GRAPH'
 };
 
-// Display using Plotly
-Plotly.newPlot("myPlot", data, layout,{displayModeBar: false});
-Plotly.newPlot("myPlot2", data1, layout2,{displayModeBar: false});
+Plotly.newPlot('myPlot', data, layout,{displayModeBar: false});
 
 document.getElementById("ss").style.display="";
     document.getElementById("ssh").style.display="";
@@ -437,7 +434,7 @@ document.getElementById("ss").style.display="";
        <div class="container2">
        <div id="myPlot" style="height:300px;max-width:350px; background-color: #06164b;display: none;"></div>
        <br>
-       <div id="myPlot2" style="height:300px;max-width:350px; background-color: #06164b;display: none;"></div>
+      
         </div>
         <br>
         <U><h1 id="ssh" style="display: none;">Expected SPI V/S CPI 4TH SEM</h1></U>
